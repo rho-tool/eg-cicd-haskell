@@ -1,0 +1,11 @@
+#!/bin/bash
+##
+# $ usr/use
+##
+source usr/usage
+PATH=$(yq .local-bin-path stack.yaml):$PATH
+
+   assert_exit 0 "eg-cicd-haskell-exe --how" 1>$DN\
+&& assert_exit 0 "eg-cicd-haskell-exe --version" 1>$DN\
+&& assert_exit 0 "eg-cicd-haskell-exe --completion" 1>$DN\
+&& echo ®

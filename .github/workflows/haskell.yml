@@ -40,7 +40,7 @@ jobs:
       run: stack setup && stack build --only-dependencies
 
     - name: Build project
-      run: stack build --copy-bins
+      run: stack build
 
     - name: Run tests
       run: stack test

@@ -7,6 +7,17 @@
 
 ## Doing
 
+### 0.1 EG CICD Haskell: introduces pipeline
+
+
+## To Do
+
+### 0.2 EG CICD Haskell: ...
+* ...
+
+
+## Done
+
 ### 0.0 EG CICD Haskell: initialises
 * readme.md
 * artisan.md
@@ -24,12 +35,3 @@
 * tst/Test.hs
 * usr/usage
 * usr/use
-
-
-## To Do
-
-### 0.1 EG CICD Haskell: ...
-* ...
-
-
-## Done

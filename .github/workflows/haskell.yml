@@ -81,8 +81,8 @@ jobs:
       with:
         files: |
           ${{env.ART}}
-        tag_name: ${{env.VSN}}
+        tag_name: ${{github.ref_name}}
         draft: false
         prerelease: false
         generate_release_notes: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}

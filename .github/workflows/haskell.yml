@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Unpack YAML
-      run: mv etc/*.yaml* .
+      run: mv etc/package.yaml . && mv etc/stack.yaml . && mv etc/stack.yaml.lock .
     - uses: actions/checkout@v4
     - uses: haskell-actions/setup@v2
       with:
@@ -39,4 +39,4 @@ jobs:
     - name: Run tests
       run: stack test
     - name: Repack YAML 
-      run: mv *.yaml* etc
+      run: mv stack.yaml.lock etc && mv stack.yaml etc && mv package.yaml etc

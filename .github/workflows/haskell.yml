@@ -76,6 +76,8 @@ jobs:
     - name: Download all artifacts
       uses: actions/download-artifact@v4
 
+    - run: ls -al
+
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1

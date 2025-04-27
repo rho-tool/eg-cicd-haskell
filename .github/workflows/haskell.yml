@@ -62,7 +62,7 @@ jobs:
         echo ${{matrix.platform}}
         echo ---
         ls $(stack path --local-install-root)/bin
-        executable_path=""$(stack path --local-install-root)/bin/*"
+        executable_path="$(stack path --local-install-root)/bin/*"
         echo "executable_path=$executable_path" >> $GITHUB_ENV
 
     - name: Upload executable

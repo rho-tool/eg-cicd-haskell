@@ -81,10 +81,10 @@ jobs:
       with:
         name: artefact
 
-    - name: Verify artefact exists
+    - name: Make artefact executable
       run: |
-        echo "[${{needs.build.outputs.artifact_paths}}]"
-        ls -al
+        chmod +x ${{needs.build.outputs.artifact_paths}}
+        ls -l "[${{needs.build.outputs.artifact_paths}}]"
 
     - name: Create Release
       id: create_release

@@ -7,7 +7,7 @@
 
 ## Doing
 
-### 0.10 EG CICD Haskell: err ...
+### 0.11 EG CICD Haskell: make release artefact executable
 
 
 ## To Do
@@ -16,6 +16,8 @@
 
 
 ## Done
+
+### 0.10 EG CICD Haskell: err ...
 
 ### 0.9 EG CICD Haskell: swings wildly, again
 

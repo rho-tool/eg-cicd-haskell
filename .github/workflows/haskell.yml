@@ -45,10 +45,15 @@ jobs:
     - name: Review project
       run: |
         ls -al
+        echo ---
         stack path --local-install-root
+        echo --o
         echo ${{github.event.repository.name}}
+        echo -o-
         echo ${{github.ref_name}}
+        echo o--
         echo ${{matrix.platform}}
+        echo ---
         ls $(stack path --local-install-root)/bin
 
     - name: Repack YAML

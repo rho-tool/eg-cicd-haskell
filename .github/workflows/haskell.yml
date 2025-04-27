@@ -57,21 +57,9 @@ jobs:
         vsn=${{github.ref_name}}
         pfm=${{matrix.platform}}
         ass=$pgm-$vsn-$pfm
-        cp $exe $ass
-        echo "asset=$ass" >> $GITHUB_ENV
-        #ls -al
-        #echo ---
-        #stack path --local-install-root
-        #echo --o
-        #echo ${{github.event.repository.name}}
-        #echo -o-
-        #echo ${{github.ref_name}}
-        #echo o--
-        #echo ${{matrix.platform}}
-        #echo ---
-        #ls $(stack path --local-install-root)/bin
-        #executable_path="$(stack path --local-install-root)/bin/*"
-        #echo "executable_path=$executable_path" >> $GITHUB_ENV
+        cp $exe bin/$ass
+        ls -al
+        echo "asset=bin/$ass" >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4

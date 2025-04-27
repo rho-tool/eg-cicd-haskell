@@ -47,6 +47,7 @@ jobs:
         ls -al
         stack path --local-install-root
         echo ${{github.event.repository.name}}
+        echo ${{github.ref_name}}
         echo ${{matrix.platform}}
         ls $(stack path --local-install-root)/bin
 

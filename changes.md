@@ -7,15 +7,17 @@
 
 ## Doing
 
-### 0.8 EG CICD Haskell: swings wildly
+### 0.9 EG CICD Haskell: swings wildly, again
 
 
 ## To Do
 
-### 0.9 EG CICD Haskell: ...
+### 0.19 EG CICD Haskell: ...
 
 
 ## Done
+
+### 0.8 EG CICD Haskell: swings wildly
 
 ### 0.7 EG CICD Haskell: preserves artefact name between pipeline jobs
 

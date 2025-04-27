@@ -36,6 +36,12 @@ jobs:
     - name: Build dependencies
       run: stack build --only-dependencies
 
+    - name: Build project
+      run: stack build
+
+    - name: Run tests
+      run: stack test
+
     - name: Review project
       run: ls -al
 

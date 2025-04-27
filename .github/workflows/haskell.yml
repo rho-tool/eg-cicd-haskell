@@ -2,7 +2,7 @@ name: Cross-Platform Build
 
 on:
   push:
-    tags: [ 'v*' ]
+    tags: [ '*' ]
 
 permissions:
   contents: write

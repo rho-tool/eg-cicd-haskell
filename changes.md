@@ -7,7 +7,7 @@
 
 ## Doing
 
-### 0.5 EG CICD Haskell: includes some more debugging
+### 0.6 EG CICD Haskell: includes some more debugging, again
 
 
 ## To Do
@@ -16,6 +16,8 @@
 
 
 ## Done
+
+### 0.5 EG CICD Haskell: includes some more debugging
 
 ### 0.4 EG CICD Haskell: includes some different debugging
 

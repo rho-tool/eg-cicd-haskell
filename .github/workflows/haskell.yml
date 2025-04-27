@@ -60,6 +60,7 @@ jobs:
         echo $exe
         echo $ass
         ls -al
+        ls -l $exe
         cp $exe $ass
         ls -al
         echo "asset=$ass" >> $GITHUB_ENV

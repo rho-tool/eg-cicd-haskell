@@ -20,5 +20,8 @@ jobs:
     - name: Check out project
       uses: actions/checkout@v4
 
+    - name: Unpack YAML
+      run: mv etc/*.yaml* .
+
     - name: Review project
       run: ls -al

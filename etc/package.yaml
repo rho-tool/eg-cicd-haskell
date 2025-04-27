@@ -1,5 +1,5 @@
 name: "eg-cicd-haskell"
-version: 0.2
+version: 0.3
 github: "rik-howard/eg-cicd-haskell"
 license: "GPL"
 license-file: "etc/license"

@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Unpack YAML
-      run: mv etc/package.yaml . && mv etc/stack.yaml . && mv etc/stack.yaml.lock . && ls -al
+      run: mv etc/package.yaml . && mv etc/stack.yaml . && mv etc/stack.yaml.lock .
 
     - uses: haskell-actions/setup@v2
       with:
@@ -55,6 +55,8 @@ jobs:
         cp $EXE $ART
         echo "ART=$ART" >> $GITHUB_ENV
         echo "VSN=$VSN" >> $GITHUB_ENV
+        cat $GITHUB_ENV
+        echo -e $ART\\n$VSN
 
     - name: Upload binary as artifact
       uses: actions/upload-artifact@v4

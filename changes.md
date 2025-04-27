@@ -7,7 +7,7 @@
 
 ## Doing
 
-### 0.6 EG CICD Haskell: includes some more debugging, again
+### 0.7 EG CICD Haskell: preserves artefact name between pipeline jobs
 
 
 ## To Do

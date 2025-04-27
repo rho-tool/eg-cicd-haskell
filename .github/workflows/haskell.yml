@@ -68,6 +68,9 @@ jobs:
     - name: Repack YAML
       run: mv stack.yaml.lock etc && mv stack.yaml etc && mv package.yaml etc
 
+    outputs:
+        artifact_paths: ${{env.ART}}
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -78,14 +81,13 @@ jobs:
 
     - run: |
         ls -al
-        echo "[${{env.ART}}]"
+        echo "[${{needs.build.outputs.artifact_paths}}]"
 
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          ${{env.ART}}
+        files: ${{needs.build.outputs.artifact_paths}}
         tag_name: ${{github.ref_name}}
         draft: false
         prerelease: false

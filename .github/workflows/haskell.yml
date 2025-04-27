@@ -57,6 +57,8 @@ jobs:
         vsn=${{github.ref_name}}
         pfm=${{matrix.platform}}
         ass=$pgm-$vsn-$pfm
+        echo $exe
+        echo $ass
         cp $exe bin/$ass
         ls -al
         echo "asset=bin/$ass" >> $GITHUB_ENV

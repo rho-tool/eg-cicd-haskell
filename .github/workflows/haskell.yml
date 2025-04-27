@@ -60,9 +60,9 @@ jobs:
         echo $exe
         echo $ass
         ls -al
-        cp $exe bin/$ass
+        cp $exe $ass
         ls -al
-        echo "asset=bin/$ass" >> $GITHUB_ENV
+        echo "asset=$ass" >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4

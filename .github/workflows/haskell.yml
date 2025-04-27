@@ -61,10 +61,11 @@ jobs:
         echo o--
         echo ${{matrix.platform}}
         echo ---
-        ls -l $(stack path --local-install-root)/bin/${{github.event.repository.name}}-exe
+        ls $(stack path --local-install-root)/bin
+        echo "executable_path=$(stack path --local-install-root)/bin/*" >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-        path: ${{$(stack path --local-install-root)/bin/*}}
+        path: ${env.executable_path}}

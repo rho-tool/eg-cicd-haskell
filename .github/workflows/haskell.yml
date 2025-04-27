@@ -65,7 +65,7 @@ jobs:
         ls -l $EXE
         echo ---
         echo copy exe as ass
-        cp $EXE $ASS
+        cp -v $EXE $ASS
         ls -al
         echo "asset=$ASS" >> $GITHUB_ENV
 

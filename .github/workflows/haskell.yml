@@ -2,7 +2,7 @@ name: Cross-Platform Build
 
 on:
   push:
-    tags: ['*']
+    tags: ['v*']
 
 permissions:
   contents: write
@@ -22,6 +22,13 @@ jobs:
 
     - name: Unpack YAML
       run: mv etc/*.yaml* .
+
+    - name: Install Stack
+      uses: haskell-actions/setup@v2
+      with:
+        ghc-version: '9.4.7'
+        stack-version: 'latest'
+        enable-stack: true
 
     - name: Review project
       run: ls -al

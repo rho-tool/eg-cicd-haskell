@@ -68,10 +68,3 @@ jobs:
       with:
         name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
         path: ${{$(stack path --local-install-root)/bin/*}}
-
-    - name: Repack YAML
-      run: mv *.yaml* etc
-
-    - name: Review project again
-      run: |
-        ls -al

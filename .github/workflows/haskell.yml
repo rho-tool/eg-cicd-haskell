@@ -57,6 +57,7 @@ jobs:
         echo "VSN=$VSN" >> $GITHUB_ENV
         cat $GITHUB_ENV
         echo -e $ART\\n$VSN
+        ls -al
 
     - name: Upload binary as artifact
       uses: actions/upload-artifact@v4

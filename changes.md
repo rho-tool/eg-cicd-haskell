@@ -7,15 +7,17 @@
 
 ## Doing
 
-### 0.3 EG CICD Haskell: includes some debugging
+### 0.4 EG CICD Haskell: includes some different debugging
 
 
 ## To Do
 
-### 0.4 EG CICD Haskell: ...
+### 0.9 EG CICD Haskell: ...
 
 
 ## Done
+
+### 0.3 EG CICD Haskell: includes some debugging
 
 ### 0.2 EG CICD Haskell: changes pipeline trigger to on-push-tags
 

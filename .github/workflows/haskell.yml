@@ -57,9 +57,11 @@ jobs:
         vsn=${{github.ref_name}}
         pfm=${{matrix.platform}}
         ass=$pgm-$vsn-$pfm
-        echo $exe
-        echo $ass
-        ls -al
+        #
+        echo
+        echo exe: $exe
+        echo ast: $ass
+        echo list exe
         ls -l $exe
         cp $exe $ass
         ls -al

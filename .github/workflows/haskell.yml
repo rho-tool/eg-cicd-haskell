@@ -2,56 +2,20 @@ name: Cross-Platform Build
 
 on:
   push:
-    tags: ['v*']
+    tags: [ 'v*' ]
+
+permissions:
+  contents: write
 
 jobs:
   build:
-    strategy:
-      fail-fast: false  # Continue with other builds even if one fails
-      matrix:
-        include:
-        - os: ubuntu-latest
-          platform: linux-x86_64
-          artifact_path: '.stack-work/dist/**/build/*/'
-          executable_extension: ""
-        - os: macos-latest
-          platform: macos-x86_64
-          artifact_path: '.stack-work/dist/**/build/*/'
-          executable_extension: ""
-        - os: windows-latest
-          platform: windows-x86_64
-          artifact_path: '.stack-work/dist/**/build/*/*.exe'
-          executable_extension: ".exe"
 
-    runs-on: ${{matrix.os}}
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Full history for proper versioning
 
-    - name: Unpack YAML
-      run: mv etc/package.yaml . && mv etc/stack.yaml . && mv etc/stack.yaml.lock .
+    - name: Check out project
+      uses: actions/checkout@v4
 
-    - name: Setup Haskell
-      uses: haskell-actions/setup@v2
-      with:
-        ghc-version: '9.4.5'  # Adjust to your GHC version
-        enable-stack: true
-        stack-version: 'latest'
-
-    - name: Set up Stack
-      runs: stack setup
-
-    - name: Build dependencies
-      runs: stack build --only-dependencies
-
-    # Add debugging to see what's happening
-    - name: Debug environment
-      run: |
-        echo "OS      : ${{ matrix.os }}"
-        echo "Platform: ${{ matrix.platform }}"
-        stack --version
-        ghc --version
-        ls -al
+    - name: Review project
+      run: ls -al

@@ -53,7 +53,7 @@ jobs:
         MACH=$(uname -m)
         ART=$PGM-$VSN-$KERN-$MACH
         cp $EXE $ART
-        echo "ART=./$ART" >> $GITHUB_ENV
+        echo "ART=$ART" >> $GITHUB_ENV
         echo "VSN=$VSN" >> $GITHUB_ENV
         cat $GITHUB_ENV
         echo -e $ART\\n$VSN
@@ -62,7 +62,7 @@ jobs:
     - name: Upload binary as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{env.ART}}
+        name: artefact
         path: ${{env.ART}}
 
     - name: Repack YAML
@@ -78,10 +78,13 @@ jobs:
     steps:
     - name: Download all artifacts
       uses: actions/download-artifact@v4
+      with:
+        name: artefact
 
-    - run: |
-        ls -al
+    - name: Verify artefact exists
+      run: |
         echo "[${{needs.build.outputs.artifact_paths}}]"
+        ls -al
 
     - name: Create Release
       id: create_release

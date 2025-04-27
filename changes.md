@@ -7,7 +7,7 @@
 
 ## Doing
 
-### 0.9 EG CICD Haskell: swings wildly, again
+### 0.10 EG CICD Haskell: err ...
 
 
 ## To Do
@@ -16,6 +16,8 @@
 
 
 ## Done
+
+### 0.9 EG CICD Haskell: swings wildly, again
 
 ### 0.8 EG CICD Haskell: swings wildly
 

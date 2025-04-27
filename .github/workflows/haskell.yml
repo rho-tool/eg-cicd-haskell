@@ -12,6 +12,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest] #, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux-x86_64
+          - os: macos-latest
+            platform: macos-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
 
     runs-on: ${{matrix.os}}
 
@@ -54,7 +61,7 @@ jobs:
         echo o--
         echo ${{matrix.platform}}
         echo ---
-        ls $(stack path --local-install-root)/bin
+        ls $(stack path --local-install-root)/bin/${{github.event.repository.name}}-exe
 
     - name: Repack YAML
       run: mv *.yaml* etc

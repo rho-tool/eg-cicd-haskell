@@ -7,16 +7,19 @@
 
 ## Doing
 
-### 0.1 EG CICD Haskell: introduces pipeline
+### 0.2 EG CICD Haskell: changes pipeline trigger to on-push-tags
 
 
 ## To Do
 
-### 0.2 EG CICD Haskell: ...
+### 0.3 EG CICD Haskell: ...
 * ...
 
 
 ## Done
+
+### 0.1 EG CICD Haskell: introduces pipeline
+* .github/workflows/haskell.yml
 
 ### 0.0 EG CICD Haskell: initialises
 * readme.md

@@ -52,8 +52,8 @@ jobs:
         KERN=${KERN,}
         MACH=$(uname -m)
         ART=$PGM-$VSN-$KERN-$MACH
-        cp $EXE $ART
-        echo "ART=$ART" >> $GITHUB_ENV
+        cp $EXE bin/$ART
+        echo "ART=bin/$ART" >> $GITHUB_ENV
         echo "VSN=$VSN" >> $GITHUB_ENV
         cat $GITHUB_ENV
         echo -e $ART\\n$VSN

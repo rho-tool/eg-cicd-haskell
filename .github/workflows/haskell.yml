@@ -69,4 +69,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-        path: ${env.executable_path}}
+        path: ${{env.executable_path}}

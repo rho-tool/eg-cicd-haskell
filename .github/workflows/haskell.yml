@@ -52,7 +52,7 @@ jobs:
     - name: Review project
       run: |
         mkdir bin
-        EXE=$(find $(stack path --local-install-root)/bin -executable | head -1)
+        EXE=$(find $(stack path --local-install-root)/bin -type f -executable | head -1)
         PGM=${{github.event.repository.name}}
         VSN=${{github.ref_name}}
         PFM=${{matrix.platform}}
@@ -65,7 +65,7 @@ jobs:
         ls -l $EXE
         echo ---
         echo copy exe as ass
-        cp -v $EXE $ASS
+        cp $EXE $ASS
         ls -al
         echo "asset=$ASS" >> $GITHUB_ENV
 

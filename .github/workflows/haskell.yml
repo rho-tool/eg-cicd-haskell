@@ -84,7 +84,7 @@ jobs:
     - name: Make artefact executable
       run: |
         chmod +x ${{needs.build.outputs.artifact_paths}}
-        ls -l "[${{needs.build.outputs.artifact_paths}}]"
+        ls -l "${{needs.build.outputs.artifact_paths}}"
 
     - name: Create Release
       id: create_release

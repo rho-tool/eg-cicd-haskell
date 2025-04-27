@@ -7,7 +7,7 @@
 
 ## Doing
 
-### 0.11 EG CICD Haskell: make release artefact executable
+### 0.12 EG CICD Haskell: fixes the list call in the relesase step
 
 
 ## To Do
@@ -16,6 +16,8 @@
 
 
 ## Done
+
+### 0.11 EG CICD Haskell: make release artefact executable
 
 ### 0.10 EG CICD Haskell: err ...
 

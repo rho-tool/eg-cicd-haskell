@@ -9,90 +9,28 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux-x86_64
+          - os: macos-latest
+            platform: macos-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
+
+    runs-on: ${{matrix.os}}
+
     steps:
-    - uses: actions/checkout@v4
 
-    - name: Unpack YAML
-      run: mv etc/package.yaml . && mv etc/stack.yaml . && mv etc/stack.yaml.lock .
-
-    - uses: haskell-actions/setup@v2
+    - name: Install Stack
+      uses: haskell-actions/setup@v2
       with:
         ghc-version: '9.4.7'
         stack-version: 'latest'
         enable-stack: true
 
-    - name: Cache
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-stack
-      with:
-        path: |
-          ~/.stack
-          .stack-work
-        key: ${{runner.os}}-stack-${{hashFiles ('stack.yaml', 'package.yaml')}}
-        restore-keys: |
-          ${{runner.os}}-stack-
-
-    - name: Install dependencies
-      run: stack setup && stack build --only-dependencies
-
-    - name: Build project
-      run: stack build
-
-    - name: Run tests
-      run: stack test
-
-    - name: Locate executable
-      run: |
-        EXE=$(find $(stack path --local-install-root)/bin -type f -executable | head -n 1)
-        PGM=$(yq .name package.yaml)
-        VSN=$(yq .version package.yaml)
-        KERN=$(uname -s)
-        KERN=${KERN,}
-        MACH=$(uname -m)
-        ART=$PGM-$VSN-$KERN-$MACH
-        cp $EXE $ART
-        echo "ART=$ART" >> $GITHUB_ENV
-        echo "VSN=$VSN" >> $GITHUB_ENV
-        cat $GITHUB_ENV
-        echo -e $ART\\n$VSN
-        ls -al
-
-    - name: Upload binary as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: artefact
-        path: ${{env.ART}}
-
-    - name: Repack YAML
-      run: mv stack.yaml.lock etc && mv stack.yaml etc && mv package.yaml etc
-
-    outputs:
-        artifact_paths: ${{env.ART}}
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download all artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: artefact
-
-    - name: Make artefact executable
-      run: |
-        chmod +x ${{needs.build.outputs.artifact_paths}}
-        ls -l "${{needs.build.outputs.artifact_paths}}"
-
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: ${{needs.build.outputs.artifact_paths}}
-        tag_name: ${{github.ref_name}}
-        draft: false
-        prerelease: false
-        generate_release_notes: true
-        token: ${{secrets.GITHUB_TOKEN}}
+    - name: Show details
+      runs: ls -al

@@ -52,7 +52,7 @@ jobs:
     - name: Review project
       run: |
         mkdir bin
-        EXE=$(find $(stack path --local-install-root)/bin -executable)
+        EXE=$(find $(stack path --local-install-root)/bin -executable | head -1)
         PGM=${{github.event.repository.name}}
         VSN=${{github.ref_name}}
         PFM=${{matrix.platform}}

@@ -15,10 +15,6 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux-x86_64
-          - os: macos-latest
-            platform: macos-x86_64
-          - os: windows-latest
-            platform: windows-x86_64
 
     runs-on: ${{matrix.os}}
 

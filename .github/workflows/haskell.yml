@@ -25,6 +25,12 @@ jobs:
 
     steps:
 
+    - name: Check out the repo
+      uses: actions/checkout@v3
+
+    - name: Show details
+      runs: ls -al
+
     - name: Install Stack
       uses: haskell-actions/setup@v2
       with:

@@ -52,20 +52,22 @@ jobs:
     - name: Review project
       run: |
         mkdir bin
-        exe=$(find $(stack path --local-install-root)/bin -executable)
-        pgm=${{github.event.repository.name}}
-        vsn=${{github.ref_name}}
-        pfm=${{matrix.platform}}
-        ass=$pgm-$vsn-$pfm
+        EXE=$(find $(stack path --local-install-root)/bin -executable)
+        PGM=${{github.event.repository.name}}
+        VSN=${{github.ref_name}}
+        PFM=${{matrix.platform}}
+        ASS=$PGM-$VSN-$PFM
         #
         echo
-        echo exe: $exe
-        echo ast: $ass
+        echo exe: $EXE
+        echo ast: $ASS
         echo list exe
-        ls -l $exe
-        cp $exe $ass
+        ls -l $EXE
+        echo
+        echo copy exe as ass
+        cp $EXE $ASS
         ls -al
-        echo "asset=$ass" >> $GITHUB_ENV
+        echo "asset=$ASS" >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4

@@ -2,7 +2,7 @@ name: Cross-Platform Build
 
 on:
   push:
-    tags: [ '*' ]
+    tags: ['*']
 
 permissions:
   contents: write
@@ -10,7 +10,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
 
     steps:
 

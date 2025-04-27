@@ -63,7 +63,7 @@ jobs:
         echo ast: $ASS
         echo list exe
         ls -l $EXE
-        echo
+        echo ---
         echo copy exe as ass
         cp $EXE $ASS
         ls -al

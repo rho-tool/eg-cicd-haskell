@@ -11,23 +11,23 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest] #, macos-latest, windows-latest]
         include:
           - os: ubuntu-latest
             platform: linux-x86_64
             arch: x86_64
-          - os: macos-latest
-            platform: macos-x86_64
-            arch: x86_64
-          - os: windows-latest
-            platform: windows-x86_64
-            arch: x86_64
+          #- os: macos-latest
+          #  platform: macos-x86_64
+          #  arch: x86_64
+          #- os: windows-latest
+          #  platform: windows-x86_64
+          #  arch: x86_64
           - os: ubuntu-latest
             platform: linux-arm64
             arch: arm64
-          - os: macos-latest
-            platform: macos-arm64
-            arch: arm64
+          #- os: macos-latest
+          #  platform: macos-arm64
+          #  arch: arm64
 
     runs-on: ${{matrix.os}}
 
@@ -52,8 +52,13 @@ jobs:
     - name: Build dependencies
       run: stack build --only-dependencies
 
-    - name: Build project
+    - name: Build project for x86_64
+      if: contains (matrix.platform, 'x86_64')
       run: stack build
+
+    - name: Build project for arm64
+      if: contains (matrix.platform, 'arm64')
+      run: stack build --ghc-options='-optl-static -fPIC' --arch=aarch64
 
     - name: Run tests
       run: stack test

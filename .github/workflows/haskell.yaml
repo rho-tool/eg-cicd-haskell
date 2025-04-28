@@ -1,151 +1,19 @@
-name: Cross-Platform Build
+name: Release
 
 on:
-  push:
-    tags: ['v*']
+  workflow_run:
+    workflows: ['Linux X64 Build']
+    types: ['completed']
 
 permissions:
   contents: write
 
 jobs:
-  build-x86_64:
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            platform: linux-x86_64
-          - os: macos-latest
-            platform: macos-x86_64
-          - os: windows-latest
-            platform: windows-x86_64
-
-    runs-on: ${{matrix.os}}
-
-    steps:
-
-    - name: Check out project
-      uses: actions/checkout@v4
-
-    - name: Unpack YAML
-      run: mv etc/*.yaml* .
-
-    - name: Install Stack
-      uses: haskell-actions/setup@v2
-      with:
-        ghc-version: '9.4.7'
-        stack-version: 'latest'
-        enable-stack: true
-
-    - name: Set up Stack
-      run: stack setup
-
-    - name: Build dependencies
-      run: stack build --only-dependencies
-
-    - name: Build project
-      run: stack build
-
-    - name: Run tests
-      run: stack test
-
-    - name: Locate binary
-      shell: bash
-      run: |
-        BIN=$(stack path --local-install-root)/bin
-        ART=${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-        ls $BIN
-        case ${{matrix.os}} in
-          ubuntu-latest)
-            cp $BIN/${{github.event.repository.name}}-exe $ART
-            echo artefact=$ART >> $GITHUB_ENV;;
-          macos-latest)
-            cp $BIN/${{github.event.repository.name}}-exe $ART
-            echo artefact=$ART >> $GITHUB_ENV;;
-          windows-latest)
-            cp $BIN/${{github.event.repository.name}}-exe.exe $ART.exe
-            echo artefact=$ART.exe >> $GITHUB_ENV;;
-        esac
-
-    - name: Upload executable
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-        path: ${{env.artefact}}
-        if-no-files-found: error
-
-  build-arm64:
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: linux
-            runner: ubuntu-latest-arm64
-            binary_extension: ""
-          - os: macos
-            runner: macos-14
-            binary_extension: ""
-
-    runs-on: ${{matrix.runner}}
-
-    steps:
-
-      - name: Check out project
-        uses: actions/checkout@v4
-
-      - name: Unpack YAML
-        run: mv etc/*.yaml* .
-
-      - name: Install Stack
-        uses: haskell-actions/setup@v2
-        with:
-          ghc-version: '9.4.7'
-          stack-version: 'latest'
-          enable-stack: true
-
-      - name: Set up Stack
-        run: stack setup
-
-      - name: Build dependencies
-        run: stack build --only-dependencies #--ghc-options='-optl-static -fPIC' --arch=aarch64
-
-      - name: Build project
-        run: stack build #--ghc-options='-optl-static -fPIC' --arch=aarch64
-
-      - name: Run tests
-        run: stack test
-
-      - name: Locate binary
-        shell: bash
-        run: |
-          BIN=$(stack path --local-install-root)/bin
-          ART=${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-          ls $BIN
-          case ${{matrix.os}} in
-            ubuntu-latest)
-              cp $BIN/${{github.event.repository.name}}-exe $ART
-              echo artefact=$ART >> $GITHUB_ENV;;
-            macos-latest)
-              cp $BIN/${{github.event.repository.name}}-exe $ART
-              echo artefact=$ART >> $GITHUB_ENV;;
-            windows-latest)
-              cp $BIN/${{github.event.repository.name}}-exe.exe $ART.exe
-              echo artefact=$ART.exe >> $GITHUB_ENV;;
-          esac
-
-      - name: Upload executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-          path: ${{env.artefact}}
-          if-no-files-found: error
 
   release:
-    needs: build-x86_64
+
+    if: ${{github.event.workflow_run.conclusion == 'success'}}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -153,37 +21,37 @@ jobs:
       - name: Download executable Linux x86_64
         uses: actions/download-artifact@v4
         with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-linux-x86_64
+          name: linux-x86_64
           path: artefacts
 
-      - name: Download executable MacOS x86_64
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-x86_64
-          path: artefacts
-
-      - name: Download executable Windows x86_64
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-windows-x86_64
-          path: artefacts
-
+#      - name: Download executable MacOS x86_64
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: macos-x86_64
+#          path: artefacts
+#
+#      - name: Download executable Windows x86_64
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: windows-x86_64
+#          path: artefacts
+#
 #      - name: Download executable Linux ARM64
 #        uses: actions/download-artifact@v4
 #        with:
-#          name: ${{github.event.repository.name}}-${{github.ref_name}}-linux-arm64
+#          name: linux-arm64
 #          path: artefacts
 #
 #      - name: Download executable MacOS ARM64
 #        uses: actions/download-artifact@v4
 #        with:
-#          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-arm64
+#          name: macos-arm64
 #          path: artefacts
 #
 #      - name: Download executable Windows ARM64
 #        uses: actions/download-artifact@v4
 #        with:
-#          name: ${{github.event.repository.name}}-${{github.ref_name}}-windows-arm64
+#          name: windows-arm64
 #          path: artefacts
 
       - name: Set permissions

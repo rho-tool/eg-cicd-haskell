@@ -92,7 +92,7 @@ jobs:
             cp $BIN/${{github.event.repository.name}}-exe $ART
             echo artefact=$ART >> $GITHUB_ENV;;
           windows-latest)
-            cp $BIN/${{github.event.repository.name}}.exe $ART.exe
+            cp $BIN/${{github.event.repository.name}}-exe.exe $ART.exe
             echo artefact=$ART.exe >> $GITHUB_ENV;;
         esac
 

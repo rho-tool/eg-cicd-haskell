@@ -121,10 +121,17 @@ jobs:
           name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-x86_64
           path: ./artefacts/macos
 
+      - name: Download Windows executable
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-x86_64
+          path: ./artefacts/windows
+
       - name: Set permissions
         run: |
           chmod +x ./artefacts/linux/*
           chmod +x ./artefacts/macos/*
+          chmod +x ./artefacts/windows/*
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -132,6 +139,7 @@ jobs:
           files: |
             ./artefacts/linux/*
             ./artefacts/macos/*
+            ./artefacts/windows/*
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

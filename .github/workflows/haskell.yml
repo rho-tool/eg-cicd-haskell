@@ -77,3 +77,24 @@ jobs:
 
     outputs:
         artifact_paths: ${{env.asset}}
+
+  release:
+    needs: build
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{needs.build.outputs.artifact_paths}}
+          tag_name: ${{github.ref_name}}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          token: ${{secrets.GITHUB_TOKEN}}

@@ -41,11 +41,17 @@ jobs:
       shell: bash
       run: |
         PGM=$(yq '.name' package.yaml)                      # eg-cicd-haskell
+        echo $PGM
         VSN=${{github.ref_name}}                            # v3.0
+        echo $VSN
         SYS=$(uname -s  | tr '[:upper:]' '[:lower:])        # linux
+        echo $SYS
         MAC=$(uname -m)                                     # x86_64
+        echo $MAC
         BIN=$(stack path --local-install-root)/bin          # .stack-work/.../bin
+        echo $BIN
         EXE=$(yq '.executables.[] | key' package.yaml)      # eg-cicd-haskell-exe
+        echo $EXE
         ART=$PGM-$VSN-$SYS-$MAC
         ls $BIN
         cp $BIN/$EXE $ART

@@ -2,7 +2,7 @@ name: Release
 
 on:
   workflow_run:
-    workflows: ['Linux X64 Build']
+    workflows: ['Linux X86_64 Build']
     types: ['completed']
 
 permissions:

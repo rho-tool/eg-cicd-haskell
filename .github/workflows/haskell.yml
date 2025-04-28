@@ -52,7 +52,7 @@ jobs:
     - name: Review project
       run: |
         mkdir bin
-        EXE=$(find $(stack path --local-install-root)/bin -type f -executable | head -1)
+        EXE=$(find $(stack path --local-install-root)/bin -type f)
         PGM=${{github.event.repository.name}}
         VSN=${{github.ref_name}}
         PFM=${{matrix.platform}}
@@ -77,5 +77,3 @@ jobs:
 
     outputs:
         artifact_paths: ${{env.asset}}
-
----

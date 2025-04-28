@@ -3,7 +3,8 @@ name: Release
 on:
   workflow_run:
     workflows: ['Build Linux X86_64']
-    types: ['completed']
+    types:
+    - completed
 
 permissions:
   contents: write

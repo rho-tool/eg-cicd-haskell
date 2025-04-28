@@ -5,7 +5,7 @@ on:
     tags: ['*']
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
 
@@ -43,20 +43,20 @@ jobs:
       shell: bash
       run: |
         PGM=$(yq '.name' package.yaml)
-        echo $PGM
         VSN=${{github.ref_name}}
-        echo $VSN
         SYS=$(uname -s  | tr [:upper:] [:lower:])
-        echo $SYS
         MAC=$(uname -m)
-        echo $MAC
-        BIN=$(stack path --local-install-root)/bin
-        echo $BIN
-        EXE=$(yq '.executables.[] | key' package.yaml)
-        echo $EXE
         ART=$PGM-$VSN-$SYS-$MAC
-        echo $ART
-        ls $BIN
+        BIN=$(stack path --local-install-root)/bin
+        EXE=$(yq '.executables.[] | key' package.yaml)
+        # echo $PGM
+        # echo $VSN
+        # echo $SYS
+        # echo $MAC
+        # echo $ART
+        # echo $BIN
+        # echo $EXE
+        # ls $BIN
         cp $BIN/$EXE $ART
         echo artefact=$ART >> $GITHUB_ENV
 

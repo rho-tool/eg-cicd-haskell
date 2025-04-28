@@ -82,19 +82,19 @@ jobs:
 #        run: |
 #          chmod +x artefacts/*
 
-      - name: Debug
-        run: |
-          ls -al artefacts
-
       - name: Set permissions
         run: |
-          chmod +x artefacts/*
+          chmod 777 artefacts/${{inputs.linux_amd_name}}
+
+      - name: Debug
+        run: |
+          ls -al artefacts/${{inputs.linux_amd_name}}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./artefacts/*
+            ./artefacts/${{inputs.linux_amd_name}}
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

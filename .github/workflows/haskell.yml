@@ -80,19 +80,33 @@ jobs:
 
   release:
     needs: build
-    runs-on: ${{matrix.os}}
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Download all artifacts
+
+      - name: Download Linux executable
         uses: actions/download-artifact@v4
         with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-linux-x86_64
+          path: ./artefacts/linux
+
+      - name: Download MacOS executable
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-x86_64
+          path: ./artefacts/macos
+
+      - name: Set permissions
+        run: |
+          chmod +x ./artifacts/linux/*
+          chmod +x ./artifacts/macos/*
 
       - name: Create Release
-        id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{needs.build.outputs.artifact_paths}}
+          files: |
+            ./artefacts/linux/*
+            ./artefacts/macos/*
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

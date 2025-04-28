@@ -41,11 +41,13 @@ jobs:
 
       #- name: Check out why?
       #  uses: actions/checkout@v4
+      - name: er
+        run: echo linux_amd=${{inputs.linux_amd_name}} >> $GITHUB_ENV
 
       - name: Download executable Linux AMD
         uses: actions/download-artifact@v4
         with:
-          name: ${{inputs.linux_amd_name}}
+          name: ${{env.linux_amd}}
           path: ./artefacts
 
 #      - name: Download executable MacOS AMD
@@ -84,17 +86,17 @@ jobs:
 
       - name: Set permissions
         run: |
-          chmod 777 artefacts/${{inputs.linux_amd_name}}
+          chmod 777 artefacts/${{env.linux_amd}}
 
       - name: Debug
         run: |
-          ls -al artefacts/${{inputs.linux_amd_name}}
+          ls -al artefacts/${{env.linux_amd}}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./artefacts/${{inputs.linux_amd_name}}
+            ./artefacts/${{env.linux_amd}}
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

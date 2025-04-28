@@ -76,34 +76,73 @@ jobs:
         path: ${{env.artefact}}
         if-no-files-found: error
 
-#  build-arm64:
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        os: [ubuntu-latest, macos-latest, windows-latest]
-#        include:
-#          - os: ubuntu-latest
-#            platform: linux-arm64
-#          #  arch: arm64
-#          #- os: macos-latest
-#          #  platform: macos-arm64
-#          #  arch: arm64
-#
-#    runs-on: ${{matrix.os}}
-#
-#    steps:
-#
-#    - name: Set up QEMU
-#      if: matrix.platform == 'linux-arm64'
-#      uses: docker/setup-qemu-action@v2
-#
-#    - name: Build dependencies for arm64
-#      if: contains (matrix.platform, 'arm64')
-#      run: stack build --only-dependencies --ghc-options='-optl-static -fPIC' --arch=aarch64
-#
-#    - name: Build project for arm64
-#      if: contains (matrix.platform, 'arm64')
-#      run: stack build --ghc-options='-optl-static -fPIC' --arch=aarch64
+  build-arm64:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux-x86_64
+          - os: macos-latest
+            platform: macos-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Unpack YAML
+        run: mv etc/*.yaml* .
+
+      - name: Install Stack
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.4.7'
+          stack-version: 'latest'
+          enable-stack: true
+
+      - name: Set up Stack
+        run: stack setup
+
+      - name: Build dependencies
+        run: stack build --only-dependencies --ghc-options='-optl-static -fPIC' --arch=aarch64
+
+      - name: Build project
+        run: stack build --ghc-options='-optl-static -fPIC' --arch=aarch64
+
+      - name: Run tests
+        run: stack test
+
+      - name: Locate binary
+        shell: bash
+        run: |
+          BIN=$(stack path --local-install-root)/bin
+          ART=${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+          ls $BIN
+          case ${{matrix.os}} in
+            ubuntu-latest)
+              cp $BIN/${{github.event.repository.name}}-exe $ART
+              echo artefact=$ART >> $GITHUB_ENV;;
+            macos-latest)
+              cp $BIN/${{github.event.repository.name}}-exe $ART
+              echo artefact=$ART >> $GITHUB_ENV;;
+            windows-latest)
+              cp $BIN/${{github.event.repository.name}}-exe.exe $ART.exe
+              echo artefact=$ART.exe >> $GITHUB_ENV;;
+          esac
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+          path: ${{env.artefact}}
+          if-no-files-found: error
 
   release:
     needs: build-x86_64
@@ -129,6 +168,25 @@ jobs:
           name: ${{github.event.repository.name}}-${{github.ref_name}}-windows-x86_64
           path: artefacts
 
+
+#      - name: Download executable Linux ARM64
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{github.event.repository.name}}-${{github.ref_name}}-linux-arm64
+#          path: artefacts
+#
+#      - name: Download executable MacOS ARM64
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-arm64
+#          path: artefacts
+#
+#      - name: Download executable Windows ARM64
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{github.event.repository.name}}-${{github.ref_name}}-windows-arm64
+#          path: artefacts
+
       - name: Set permissions
         run: |
           chmod +x artefacts/*
@@ -137,9 +195,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./artefacts/linux/*
-            ./artefacts/macos/*
-            ./artefacts/windows/*
+            ./artefacts/*
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

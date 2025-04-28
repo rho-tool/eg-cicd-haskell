@@ -55,6 +55,7 @@ jobs:
         EXE=$(yq '.executables.[] | key' package.yaml)      # eg-cicd-haskell-exe
         echo $EXE
         ART=$PGM-$VSN-$SYS-$MAC
+        echo $ART
         ls $BIN
         cp $BIN/$EXE $ART
         echo artefact=$ART >> $GITHUB_ENV;;

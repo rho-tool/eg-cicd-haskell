@@ -1,9 +1,9 @@
-name: Build Linux X86_64
+name: Build Linux AMD64
 
 on:
   workflow_call:
     outputs:
-      artefact_name:
+      artefact_name_linux_amd:
         value: ${{jobs.build.outputs.artefact_name}}
 
 permissions:
@@ -65,6 +65,9 @@ jobs:
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
-        name: linux-x86_64
+        name: ${{steps.locate-binary.outputs.artefact_name}}
         path: ${{steps.locate-binary.outputs.artefact_name}}
         if-no-files-found: error
+
+    outputs:
+      artefact_name: ${{steps.locate-binary.outputs.artefact_name}}

@@ -46,19 +46,19 @@ jobs:
         echo $PGM
         VSN=${{github.ref_name}}
         echo $VSN
-        SYS=$(uname -s  | tr '[:upper:]' '[:lower:])        # linux
+        SYS=$(uname -s  | tr [:upper:] [:lower:])
         echo $SYS
-        MAC=$(uname -m)                                     # x86_64
+        MAC=$(uname -m)
         echo $MAC
-        BIN=$(stack path --local-install-root)/bin          # .stack-work/.../bin
+        BIN=$(stack path --local-install-root)/bin
         echo $BIN
-        EXE=$(yq '.executables.[] | key' package.yaml)      # eg-cicd-haskell-exe
+        EXE=$(yq '.executables.[] | key' package.yaml)
         echo $EXE
         ART=$PGM-$VSN-$SYS-$MAC
         echo $ART
         ls $BIN
         cp $BIN/$EXE $ART
-        echo artefact=$ART >> $GITHUB_ENV;;
+        echo artefact=$ART >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4

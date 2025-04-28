@@ -3,14 +3,14 @@ name: Build Linux X86_64
 on:
   workflow_call:
     outputs:
-      artefact_name: ${{jobs.build-linux-x86_64.outputs.artefact_name}}
+      artefact_name: ${{jobs.build.outputs.artefact_name}}
 
 permissions:
   contents: read
 
 jobs:
 
-  build-linux-x86_64:
+  build:
 
     runs-on: ubuntu-latest  # [linux, x64]
     steps:

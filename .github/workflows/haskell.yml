@@ -87,13 +87,13 @@ jobs:
         case ${{matrix.os}} in
           ubuntu-latest)
             cp $BIN/${{github.event.repository.name}}-exe $ART
-            echo artefact=$ART >> $GITHUB_ENV
+            echo artefact=$ART >> $GITHUB_ENV;;
           macos-latest)
             cp $BIN/${{github.event.repository.name}}-exe $ART
-            echo artefact=$ART >> $GITHUB_ENV
+            echo artefact=$ART >> $GITHUB_ENV;;
           windows-latest)
             cp $BIN/${{github.event.repository.name}}.exe $ART.exe
-            echo artefact=$ART.exe >> $GITHUB_ENV
+            echo artefact=$ART.exe >> $GITHUB_ENV;;
         esac
 
     - name: Upload executable

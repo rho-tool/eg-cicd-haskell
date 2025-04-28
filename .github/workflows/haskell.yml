@@ -56,27 +56,27 @@ jobs:
         PGM=${{github.event.repository.name}}
         VSN=${{github.ref_name}}
         PFM=${{matrix.platform}}
-        ASS=$PGM-$VSN-$PFM
+        ART=$PGM-$VSN-$PFM
         #
         echo
         echo exe: $EXE
-        echo ast: $ASS
+        echo ast: $ART
         echo list exe
         ls -l $EXE
         echo ---
         echo copy exe as ass
-        cp $EXE $ASS
+        cp $EXE $ART
         ls -al
-        echo "asset=$ASS" >> $GITHUB_ENV
+        echo "artefact=$ART" >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-        path: ${{env.asset}}
+        path: ${{env.artefact}}
 
-    outputs:
-        artifact_paths: ${{env.asset}}
+    #outputs:
+    #    artifact_paths: ${{env.artefact}}
 
   release:
     needs: build

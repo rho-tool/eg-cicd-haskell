@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{inputs.linux_amd_name}}
-          path: artefacts
+          path: ./artefacts
 
 #      - name: Download executable MacOS AMD
 #        uses: actions/download-artifact@v4
@@ -86,11 +86,15 @@ jobs:
         run: |
           ls -al artefacts
 
+      - name: Set permissions
+        run: |
+          chmod +x artefacts/*
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artefacts/${{inputs.linux_amd_name}}
+            ./artefacts/*
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

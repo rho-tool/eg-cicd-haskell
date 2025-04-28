@@ -1,4 +1,4 @@
-name: Linux X64 Build
+name: Linux X86_64 Build
 
 on:
   push:
@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-linux-x86_64:
     runs-on: ubuntu-latest  # [linux, x64]
     steps:
 
@@ -40,12 +40,12 @@ jobs:
     - name: Locate binary
       shell: bash
       run: |
-        PGM=$(yq '.name' etc/package.yaml)                  # eg-cicd-haskell
+        PGM=$(yq '.name' package.yaml)                      # eg-cicd-haskell
         VSN=${{github.ref_name}}                            # v3.0
         SYS=$(uname -s  | tr '[:upper:]' '[:lower:])        # linux
         MAC=$(uname -m)                                     # x86_64
         BIN=$(stack path --local-install-root)/bin          # .stack-work/.../bin
-        EXE=$(yq '.executables.[] | key' etc/package.yaml)  # eg-cicd-haskell-exe
+        EXE=$(yq '.executables.[] | key' package.yaml)      # eg-cicd-haskell-exe
         ART=$PGM-$VSN-$SYS-$MAC
         ls $BIN
         cp $BIN/$EXE $ART

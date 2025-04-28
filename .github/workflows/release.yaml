@@ -3,7 +3,7 @@ name: Release
 on:
   workflow_call:
     inputs:
-      artefact_name_linux_amd:
+      linux_amd_name:
         type: string
         required: false
         default: 'linux-amd64'
@@ -42,37 +42,37 @@ jobs:
       #- name: Check out why?
       #  uses: actions/checkout@v4
 
-      - name: Download executable Linux AMD64
+      - name: Download executable Linux AMD
         uses: actions/download-artifact@v4
         with:
-          name: ${{inputs.artefact_name_linux_amd}}
+          name: ${{inputs.linux_amd_name}}
           path: artefacts
 
-#      - name: Download executable MacOS AMD64
+#      - name: Download executable MacOS AMD
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: macos-x86_64
 #          path: artefacts
 #
-#      - name: Download executable Windows AMD64
+#      - name: Download executable Windows AMD
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: windows-x86_64
 #          path: artefacts
 #
-#      - name: Download executable Linux ARM64
+#      - name: Download executable Linux ARM
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: linux-arm64
 #          path: artefacts
 #
-#      - name: Download executable MacOS ARM64
+#      - name: Download executable MacOS ARM
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: macos-arm64
 #          path: artefacts
 #
-#      - name: Download executable Windows ARM64
+#      - name: Download executable Windows ARM
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: windows-arm64
@@ -81,6 +81,10 @@ jobs:
 #      - name: Set permissions
 #        run: |
 #          chmod +x artefacts/*
+
+      - name: Debug
+        run: |
+          ls -al artefacts
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

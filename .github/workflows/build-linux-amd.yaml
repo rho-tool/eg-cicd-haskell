@@ -3,7 +3,7 @@ name: Build Linux AMD64
 on:
   workflow_call:
     outputs:
-      artefact_name_linux_amd:
+      artefact_name:
         value: ${{jobs.build.outputs.artefact_name}}
 
 permissions:

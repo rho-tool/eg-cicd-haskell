@@ -19,6 +19,10 @@ jobs:
             platform: macos-x86_64
           - os: windows-latest
             platform: windows-x86_64
+          - os: ubuntu-latest
+            platform: linux-arm64
+          - os: macos-latest
+            platform: macos-arm64
 
     runs-on: ${{matrix.os}}
 

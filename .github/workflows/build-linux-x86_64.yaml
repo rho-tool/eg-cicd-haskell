@@ -1,7 +1,7 @@
 name: Build Linux X86_64
 
 on:
-  workflow_call:
+  workflow_call: ${{github.ref_name}}
 
 permissions:
   contents: read

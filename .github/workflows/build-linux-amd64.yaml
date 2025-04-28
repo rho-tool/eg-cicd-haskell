@@ -35,14 +35,14 @@ jobs:
     - name: Build dependencies
       run: stack build --only-dependencies
 
-    - name: Build project
+    - name: Build dependent
       run: stack build
 
     - name: Run tests
       run: stack test
 
-    - name: Locate binary
-      id: locate-binary
+    - name: Determine artefact
+      id: determine-artefact
       shell: bash
       run: |
         PGM=$(yq '.name' package.yaml)
@@ -61,14 +61,14 @@ jobs:
         # echo $EXE
         # ls $BIN
         cp $BIN/$EXE $ART
-        echo artefact_name=$ART >> $GITHUB_ENV
+        echo artefact_name=$ART >> $GITHUB_OUTPUT
 
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
-        name: ${{steps.locate-binary.outputs.artefact_name}}
-        path: ${{steps.locate-binary.outputs.artefact_name}}
+        name: ${{steps.determine-artefact.outputs.artefact_name}}
+        path: ${{steps.determine-artefact.outputs.artefact_name}}
         if-no-files-found: error
 
     outputs:
-      artefact_name: ${{steps.locate-binary.outputs.artefact_name}}
+      artefact_name: ${{steps.determine-artefact.outputs.artefact_name}}

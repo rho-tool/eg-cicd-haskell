@@ -49,35 +49,6 @@ jobs:
     - name: Run tests
       run: stack test
 
-    #- name: Review project
-    #  run: |
-    #    mkdir bin
-    #    EXE=$(find $(stack path --local-install-root)/bin -type f)
-    #    PGM=${{github.event.repository.name}}
-    #    VSN=${{github.ref_name}}
-    #    PFM=${{matrix.platform}}
-    #    ART=$PGM-$VSN-$PFM
-    #    #
-    #    echo
-    #    echo exe: $EXE
-    #    echo ast: $ART
-    #    echo list exe
-    #    ls -l $EXE
-    #    echo ---
-    #    echo copy exe as ass
-    #    cp $EXE $ART
-    #    ls -al
-    #    echo "artefact=$ART" >> $GITHUB_ENV
-
-    #- name: Upload executable
-    #  uses: actions/upload-artifact@v4
-    #  with:
-    #    name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
-    #    path: ${{env.artefact}}
-
-    #outputs:
-    #    artifact_paths: ${{env.artefact}}
-
     - name: Locate binary
       shell: bash
       run: |
@@ -132,7 +103,6 @@ jobs:
           chmod +x ./artefacts/linux/*
           chmod +x ./artefacts/macos/*
           chmod +x ./artefacts/windows/*
-          ls -l
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

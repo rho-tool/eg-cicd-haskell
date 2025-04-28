@@ -11,14 +11,14 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest] #, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         include:
           - os: ubuntu-latest
             platform: linux-x86_64
           - os: macos-latest
             platform: macos-x86_64
-          #- os: windows-latest
-          #  platform: windows-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
 
     runs-on: ${{matrix.os}}
 
@@ -49,34 +49,59 @@ jobs:
     - name: Run tests
       run: stack test
 
-    - name: Review project
+    #- name: Review project
+    #  run: |
+    #    mkdir bin
+    #    EXE=$(find $(stack path --local-install-root)/bin -type f)
+    #    PGM=${{github.event.repository.name}}
+    #    VSN=${{github.ref_name}}
+    #    PFM=${{matrix.platform}}
+    #    ART=$PGM-$VSN-$PFM
+    #    #
+    #    echo
+    #    echo exe: $EXE
+    #    echo ast: $ART
+    #    echo list exe
+    #    ls -l $EXE
+    #    echo ---
+    #    echo copy exe as ass
+    #    cp $EXE $ART
+    #    ls -al
+    #    echo "artefact=$ART" >> $GITHUB_ENV
+
+    #- name: Upload executable
+    #  uses: actions/upload-artifact@v4
+    #  with:
+    #    name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+    #    path: ${{env.artefact}}
+
+    #outputs:
+    #    artifact_paths: ${{env.artefact}}
+
+    - name: Locate binary
+      shell: bash
       run: |
-        mkdir bin
-        EXE=$(find $(stack path --local-install-root)/bin -type f)
-        PGM=${{github.event.repository.name}}
-        VSN=${{github.ref_name}}
-        PFM=${{matrix.platform}}
-        ART=$PGM-$VSN-$PFM
-        #
-        echo
-        echo exe: $EXE
-        echo ast: $ART
-        echo list exe
-        ls -l $EXE
-        echo ---
-        echo copy exe as ass
-        cp $EXE $ART
-        ls -al
-        echo "artefact=$ART" >> $GITHUB_ENV
+        BIN=$(stack path --local-install-root)/bin
+        ART=${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
+        ls $BIN
+        case ${{matrix.os}} in
+          ubuntu-latest)
+            cp $BIN/${{github.event.repository.name}}-exe $ART
+            echo artefact=$ART >> $GITHUB_ENV
+          macos-latest)
+            cp $BIN/${{github.event.repository.name}}-exe $ART
+            echo artefact=$ART >> $GITHUB_ENV
+          windows-latest)
+            cp $BIN/${{github.event.repository.name}}.exe $ART.exe
+            echo artefact=$ART.exe >> $GITHUB_ENV
+        esac
 
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         name: ${{github.event.repository.name}}-${{github.ref_name}}-${{matrix.platform}}
         path: ${{env.artefact}}
-
-    #outputs:
-    #    artifact_paths: ${{env.artefact}}
+        if-no-files-found: error
 
   release:
     needs: build

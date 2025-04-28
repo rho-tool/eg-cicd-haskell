@@ -2,9 +2,8 @@ name: Build Linux X86_64
 
 on:
   workflow_call:
-    inputs:
-      foo:
-        type: string
+    outputs:
+      artefact_name: ${{jobs.build-linux-x86_64.outputs.artefact_name}}
 
 permissions:
   contents: read
@@ -60,11 +59,11 @@ jobs:
         # echo $EXE
         # ls $BIN
         cp $BIN/$EXE $ART
-        echo artefact=$ART >> $GITHUB_ENV
+        echo artefact_name=$ART >> $GITHUB_ENV
 
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         name: linux-x86_64
-        path: ${{env.artefact}}
+        path: ${{steps.locate-binary.outputs.artefact_name}}
         if-no-files-found: error

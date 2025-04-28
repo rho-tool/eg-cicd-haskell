@@ -1,7 +1,7 @@
 name: Release
 
 on:
-  workflow_run:
+  workflow_call:
     workflows: ['Build Linux X86_64']
     tags: ['*']
     types:

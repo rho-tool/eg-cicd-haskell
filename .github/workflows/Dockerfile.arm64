@@ -1,0 +1,24 @@
+FROM --platform=linux/arm64 haskell:latest
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libffi-dev \
+    libgmp-dev \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Stack
+RUN curl -sSL https://get.haskellstack.org/ | sh
+
+# Copy project files
+COPY . .
+COPY etc/*.yaml* .
+
+# Build the project
+RUN stack setup && stack build --copy-bins
+
+# Extract binary path for later use
+RUN echo "$(stack path --local-bin)/your-app-name" > /binary-path.txt

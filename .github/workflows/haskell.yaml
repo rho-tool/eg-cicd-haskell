@@ -52,6 +52,10 @@ jobs:
     - name: Build dependencies
       run: stack build --only-dependencies
 
+    - name: Set up QEMU
+      if: matrix.platform == 'linux-arm64'
+      uses: docker/setup-qemu-action@v2
+
     - name: Build project for x86_64
       if: contains (matrix.platform, 'x86_64')
       run: stack build

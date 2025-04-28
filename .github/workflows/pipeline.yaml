@@ -9,11 +9,11 @@ permissions:
 
 jobs:
 
-  build-linux-amd:
+  linux-amd:
     uses: ./.github/workflows/build-linux-amd64.yaml
 
   release:
-    needs: [build-linux-amd]
+    needs: [linux-amd]
     uses: ./.github/workflows/release.yaml
     with:
       artefact_name_linux_amd: ${{needs.build-linux-x86_64.artefact_name_linux_amd}}

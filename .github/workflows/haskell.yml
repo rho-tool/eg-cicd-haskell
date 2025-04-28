@@ -132,6 +132,7 @@ jobs:
           chmod +x ./artefacts/linux/*
           chmod +x ./artefacts/macos/*
           chmod +x ./artefacts/windows/*
+          ls -l
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

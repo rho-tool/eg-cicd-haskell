@@ -42,9 +42,9 @@ jobs:
     - name: Locate binary
       shell: bash
       run: |
-        PGM=$(yq '.name' package.yaml)                      # eg-cicd-haskell
+        PGM=$(yq '.name' package.yaml)
         echo $PGM
-        VSN=${{github.ref_name}}                            # v3.0
+        VSN=${{github.ref_name}}
         echo $VSN
         SYS=$(uname -s  | tr '[:upper:]' '[:lower:])        # linux
         echo $SYS

@@ -1,0 +1,14 @@
+name: Pipeline
+
+on:
+  push:
+    tags: ['*']
+
+jobs:
+
+  build-linux-x86_64:
+    uses: .github/workflows/build-linux-x86_64.yaml
+
+  #release:
+  #  needs: [build-linux-x86_64]
+  #  uses: .github/workflows/release.yaml

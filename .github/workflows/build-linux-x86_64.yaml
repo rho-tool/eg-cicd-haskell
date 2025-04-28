@@ -1,8 +1,7 @@
 name: Build Linux X86_64
 
 on:
-  push:
-    tags: ['*']
+  workflow_call:
 
 permissions:
   contents: read

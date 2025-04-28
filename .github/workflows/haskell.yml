@@ -124,7 +124,7 @@ jobs:
       - name: Download Windows executable
         uses: actions/download-artifact@v4
         with:
-          name: ${{github.event.repository.name}}-${{github.ref_name}}-macos-x86_64
+          name: ${{github.event.repository.name}}-${{github.ref_name}}-windows-x86_64
           path: ./artefacts/windows
 
       - name: Set permissions

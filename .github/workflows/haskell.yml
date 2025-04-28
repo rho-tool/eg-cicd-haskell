@@ -98,8 +98,8 @@ jobs:
 
       - name: Set permissions
         run: |
-          chmod +x ./artifacts/linux/*
-          chmod +x ./artifacts/macos/*
+          chmod +x ./artefacts/linux/*
+          chmod +x ./artefacts/macos/*
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

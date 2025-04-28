@@ -90,7 +90,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artefacts/*
+            artefacts/${{inputs.linux_amd_name}}
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 env:
-  PROGRAM: ${{github.repository}}
+  PROGRAM: ${{github.repository_name}}
   VERSION: ${{github.ref_name}}
   OS_LINUX_AMD: ubuntu-latest
   OS_LINUX_ARD: ubuntu-24.04-arm

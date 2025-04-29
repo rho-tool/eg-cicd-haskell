@@ -54,9 +54,9 @@ jobs:
         VSN=${{github.ref_name}}
         SYS=$(uname -s  | tr [:upper:] [:lower:])
         MAC=$(uname -m)
-        ART=$PGM-$VSN-$SYS-$MAC
+        ART=$PGM-$VSN-$SYS-$MAC.exe
         BIN=$(stack path --local-install-root)/bin
-        EXE=$(yq '.executables.[] | key' package.yaml)
+        EXE=$(yq '.executables.[] | key' package.yaml).exe
         echo $PGM
         echo $VSN
         echo $SYS

@@ -7,7 +7,25 @@ on:
 permissions:
   contents: write
 
+env:
+  PROGRAM: ${{github.repository}}
+  VERSION: ${{github.ref_name}}
+  OS_LINUX_AMD: ubuntu-latest
+  OS_LINUX_ARD: ubuntu-24.04-arm
+  OS_DARWIN_AMD: macos-13
+  OS_DARWIN_ARD: macos-latest
+  OS_WINDOWS_AMD: windows-latest
+  OS_WINDOWS_ARD: windows-11-arm
+
 jobs:
+
+  show-env:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo ${{env.PROGRAM}}
+        echo ${{env.VERSION}}
+        echo ${{env.OS_DARWIN_AMD}}
 
   #linux-amd:
   #  uses: ./.github/workflows/build-linux-amd.yaml
@@ -21,28 +39,28 @@ jobs:
   #darwin-arm:
   #  uses: ./.github/workflows/build-darwin-arm.yaml
 
-  windows-amd:
-    uses: ./.github/workflows/build-windows-amd.yaml
+  #windows-amd:
+  #  uses: ./.github/workflows/build-windows-amd.yaml
 
   #windows-arm:
   #  uses: ./.github/workflows/build-windows-arm.yaml
 
-  release:
+  #release:
     #needs: [linux-amd]
     #needs: [linux-arm]
     #needs: [darwin-amd]
     #needs: [darwin-arm]
-    needs: [windows-amd]
+    #needs: [windows-amd]
     #needs: [windows-arm]
     #needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
-    uses: ./.github/workflows/release.yaml
-    with:
-      linux_amd_name: ${{needs.linux-amd.artefact_name}}
-      linux_arm_name: ${{needs.linux-arm.artefact_name}}
-      darwin_amd_name: ${{needs.darwin-amd.artefact_name}}
-      darwin_arm_name: ${{needs.darwin-arm.artefact_name}}
-      windows_amd_name: ${{needs.windows-amd.artefact_name}}
-      windows_arm_name: ${{needs.windows-arm.artefact_name}}
+    #uses: ./.github/workflows/release.yaml
+    #with:
+    #  linux_amd_name: ${{needs.linux-amd.artefact_name}}
+    #  linux_arm_name: ${{needs.linux-arm.artefact_name}}
+    #  darwin_amd_name: ${{needs.darwin-amd.artefact_name}}
+    #  darwin_arm_name: ${{needs.darwin-arm.artefact_name}}
+    #  windows_amd_name: ${{needs.windows-amd.artefact_name}}
+    #  windows_arm_name: ${{needs.windows-arm.artefact_name}}
 
 #
 # https://docs.github.com/en/actions/writing-workflows/choosing-where-your-workflow-runs/choosing-the-runner-for-a-job#choosing-github-hosted-runners

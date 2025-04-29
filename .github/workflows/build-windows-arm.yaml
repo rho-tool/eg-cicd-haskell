@@ -13,8 +13,12 @@ jobs:
 
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-11-arm
     steps:
+
+    - name: Install YQ via Chocolatey
+      run: choco install yq --no-progress -y
+      shell: pwsh
 
     - name: Check out code
       uses: actions/checkout@v4

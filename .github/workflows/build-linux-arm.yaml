@@ -29,11 +29,14 @@ jobs:
         stack-version: 'latest'
         enable-stack: true
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
     - name: Set up Stack
-      run: stack setup
+      run: stack setup --arch=aarch64
 
     - name: Build dependencies
-      run: stack build --only-dependencies --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies
 
     - name: Build dependent
       run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"

@@ -21,11 +21,19 @@ jobs:
   darwin-arm:
     uses: ./.github/workflows/build-darwin-arm.yaml
 
+  windows-amd:
+    uses: ./.github/workflows/build-windows-amd.yaml
+
+  windows-arm:
+    uses: ./.github/workflows/build-windows-arm.yaml
+
   release:
-    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm]
+    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}
       linux_arm_name: ${{needs.linux-arm.artefact_name}}
       darwin_amd_name: ${{needs.darwin-amd.artefact_name}}
       darwin_arm_name: ${{needs.darwin-arm.artefact_name}}
+      windows_amd_name: ${{needs.windows-amd.artefact_name}}
+      windows_arm_name: ${{needs.windows-arm.artefact_name}}

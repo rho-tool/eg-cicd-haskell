@@ -15,12 +15,12 @@ on:
       darwin_arm_name:
         type: string
         required: true
-      #windows_amd_name:
-      #  type: string
-      #  required: true
-      #windows_arm_name:
-      #  type: string
-      #  required: true
+      windows_amd_name:
+        type: string
+        required: true
+      windows_arm_name:
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -60,21 +60,17 @@ jobs:
           name: ${{inputs.darwin_arm_name}}
           path: artefacts
 
-#      - name: Download executable Windows AMD
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: windows-x86_64
-#          path: artefacts
-#
-#      - name: Download executable Windows ARM
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: windows-arm64
-#          path: artefacts
-#
-#      - name: Set permissions
-#        run: |
-#          chmod +x artefacts/*
+      - name: Download executable Windows AMD
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.windows_amd_name}}
+          path: artefacts
+
+      - name: Download executable Windows ARM
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.windows_arm_name}}
+          path: artefacts
 
       - name: Debug
         run: |
@@ -82,14 +78,11 @@ jobs:
           ls -al ./artefacts
           echo ---
           ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-x86_64
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-arm64
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-darwin-x86_64
           ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-darwin-arm64
-
-      #- name: List files
-      #  id: list-files
-      #  run: |
-      #    echo "file_list=$(find ./artefacts -type f | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
-      #    echo "Files found:"
-      #    find ./artefacts -type f
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-windows-x86_64
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-windows-arm64
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

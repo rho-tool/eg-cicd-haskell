@@ -52,14 +52,14 @@ jobs:
         ART=$PGM-$VSN-$SYS-$MAC
         BIN=$(stack path --local-install-root)/bin
         EXE=$(yq '.executables.[] | key' package.yaml)
-        echo $PGM
-        echo $VSN
-        echo $SYS
-        echo $MAC
-        echo $ART
-        echo $BIN
-        echo $EXE
-        ls -l $BIN
+        # echo $PGM
+        # echo $VSN
+        # echo $SYS
+        # echo $MAC
+        # echo $ART
+        # echo $BIN
+        # echo $EXE
+        # ls -l $BIN
         cp $BIN/$EXE $ART
         echo artefact_name=$ART >> $GITHUB_OUTPUT
 

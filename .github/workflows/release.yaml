@@ -5,7 +5,7 @@ on:
     inputs:
       linux_amd_name:
         type: string
-        required: false
+        required: true
         default: 'linux-amd64'
       #artefact_name_linux_arm:
       #  type: string
@@ -41,13 +41,11 @@ jobs:
 
       #- name: Check out why?
       #  uses: actions/checkout@v4
-      - name: er
-        run: echo linux_amd=${{inputs.linux_amd_name}} >> $GITHUB_ENV
 
       - name: Download executable Linux AMD
         uses: actions/download-artifact@v4
         with:
-          name: ${{env.linux_amd}}
+          name: ${{inputs.linux_amd_name}}
           path: ./artefacts
 
 #      - name: Download executable MacOS AMD
@@ -84,19 +82,17 @@ jobs:
 #        run: |
 #          chmod +x artefacts/*
 
-      - name: Set permissions
+      - name: List files
+        id: list-files
         run: |
-          chmod 777 artefacts/${{env.linux_amd}}
-
-      - name: Debug
-        run: |
-          ls -al artefacts/${{env.linux_amd}}
+          echo "file_list=$(find ./artefacts -type f | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+          echo "Files found:"
+          find ./artefacts -type f
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            ./artefacts/${{env.linux_amd}}
+          files: ${{steps.find_files.outputs.file_list}}
           tag_name: ${{github.ref_name}}
           draft: false
           prerelease: false

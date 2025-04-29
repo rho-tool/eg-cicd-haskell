@@ -1,0 +1,74 @@
+name: Build Darwin ARM64
+
+on:
+  workflow_call:
+    outputs:
+      artefact_name:
+        value: ${{jobs.build.outputs.artefact_name}}
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+
+    runs-on: macos-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Unpack YAML
+      run: mv etc/*.yaml* .
+
+    - name: Install Stack
+      uses: haskell-actions/setup@v2
+      with:
+        ghc-version: '9.4.7'
+        stack-version: 'latest'
+        enable-stack: true
+
+    - name: Set up Stack
+      run: stack setup
+
+    - name: Build dependencies
+      run: stack build --only-dependencies --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+
+    - name: Build dependent
+      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+
+    - name: Run tests
+      run: stack test
+
+    - name: Determine artefact
+      id: determine-artefact
+      shell: bash
+      run: |
+        PGM=$(yq '.name' package.yaml)
+        echo $PGM
+        VSN=${{github.ref_name}}
+        echo $VSN
+        SYS=$(uname -s  | tr [:upper:] [:lower:])
+        echo $SYS
+        MAC=$(uname -m)
+        echo $MAC
+        ART=$PGM-$VSN-$SYS-$MAC
+        echo $ART
+        BIN=$(stack path --local-install-root)/bin
+        echo $BIN
+        EXE=$(yq '.executables.[] | key' package.yaml)
+        echo $EXE
+        ls $BIN
+        cp $BIN/$EXE $ART
+        echo artefact_name=$ART >> $GITHUB_OUTPUT
+
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{steps.determine-artefact.outputs.artefact_name}}
+        path: ${{steps.determine-artefact.outputs.artefact_name}}
+        if-no-files-found: error
+
+    outputs:
+      artefact_name: ${{steps.determine-artefact.outputs.artefact_name}}

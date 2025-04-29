@@ -14,7 +14,6 @@ env:
   OS_LINUX_ARD: ubuntu-24.04-arm
   OS_DARWIN_AMD: macos-13
   OS_DARWIN_ARD: macos-latest
-  OS_WINDOWS_AMD: windows-latest
   OS_WINDOWS_ARD: windows-11-arm
 
 jobs:
@@ -42,7 +41,7 @@ jobs:
   windows-amd:
     uses: ./.github/workflows/build-windows-amd.yaml
     with:
-      os-name: ${{env.OS_WINDOWS_AMD}}
+      os-name: windows-latest
 
   #windows-arm:
   #  uses: ./.github/workflows/build-windows-arm.yaml

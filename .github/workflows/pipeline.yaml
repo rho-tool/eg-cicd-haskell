@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 env:
-  PROGRAM: ${{split (github.repository, '/') [1]}}
+  PROGRAM: ${{github.repository.name}}
   VERSION: ${{github.ref_name}}
   OS_LINUX_AMD: ubuntu-latest
   OS_LINUX_ARD: ubuntu-24.04-arm

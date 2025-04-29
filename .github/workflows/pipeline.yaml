@@ -9,23 +9,23 @@ permissions:
 
 jobs:
 
-  linux-amd:
-    uses: ./.github/workflows/build-linux-amd.yaml
+  #linux-amd:
+  #  uses: ./.github/workflows/build-linux-amd.yaml
 
   linux-arm:
     uses: ./.github/workflows/build-linux-arm.yaml
 
-  darwin-amd:
-    uses: ./.github/workflows/build-darwin-amd.yaml
+  #darwin-amd:
+  #  uses: ./.github/workflows/build-darwin-amd.yaml
 
-  darwin-arm:
-    uses: ./.github/workflows/build-darwin-arm.yaml
+  #darwin-arm:
+  #  uses: ./.github/workflows/build-darwin-arm.yaml
 
-  windows-amd:
-    uses: ./.github/workflows/build-windows-amd.yaml
+  #windows-amd:
+  #  uses: ./.github/workflows/build-windows-amd.yaml
 
-  windows-arm:
-    uses: ./.github/workflows/build-windows-arm.yaml
+  #windows-arm:
+  #  uses: ./.github/workflows/build-windows-arm.yaml
 
   release:
     #needs: [linux-amd]

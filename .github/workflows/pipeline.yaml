@@ -28,7 +28,13 @@ jobs:
     uses: ./.github/workflows/build-windows-arm.yaml
 
   release:
-    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
+    #needs: [linux-amd]
+    needs: [linux-arm]
+    #needs: [darwin-amd]
+    #needs: [darwin-arm]
+    #needs: [windows-arm]
+    #needs: [windows-arm]
+    #needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}

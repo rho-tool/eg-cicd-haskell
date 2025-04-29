@@ -13,7 +13,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-arm64
     steps:
 
     - name: Check out code
@@ -29,19 +29,19 @@ jobs:
         stack-version: 'latest'
         enable-stack: true
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-      with:
-        platforms: arm64
+    #- name: Set up QEMU
+    #  uses: docker/setup-qemu-action@v2
+    #  with:
+    #    platforms: arm64
 
     - name: Set up Stack
-      run: stack setup --arch=aarch64
+      run: stack setup
 
     - name: Build dependencies
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies
+      run: stack build --only-dependencies
 
     - name: Build dependent
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build
 
     - name: Run tests
       run: stack test

@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/build-darwin-arm.yaml
 
   release:
-    needs: [linux-amd]
+    needs: [linux-amd, darwin-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}

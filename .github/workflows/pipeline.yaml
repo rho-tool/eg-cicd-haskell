@@ -12,11 +12,11 @@ jobs:
   #linux-amd:
   #  uses: ./.github/workflows/build-linux-amd.yaml
 
-  linux-arm:
-    uses: ./.github/workflows/build-linux-arm.yaml
+  #linux-arm:
+  #  uses: ./.github/workflows/build-linux-arm.yaml
 
-  #darwin-amd:
-  #  uses: ./.github/workflows/build-darwin-amd.yaml
+  darwin-amd:
+    uses: ./.github/workflows/build-darwin-amd.yaml
 
   #darwin-arm:
   #  uses: ./.github/workflows/build-darwin-arm.yaml
@@ -29,8 +29,8 @@ jobs:
 
   release:
     #needs: [linux-amd]
-    needs: [linux-arm]
-    #needs: [darwin-amd]
+    #needs: [linux-arm]
+    needs: [darwin-amd]
     #needs: [darwin-arm]
     #needs: [windows-arm]
     #needs: [windows-arm]

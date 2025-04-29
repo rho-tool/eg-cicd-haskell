@@ -42,7 +42,7 @@ jobs:
   windows-amd:
     uses: ./.github/workflows/build-windows-amd.yaml
     with:
-      os-name: ${{env.OS_WINDOWS_AMD}}
+      os-name: $OS_WINDOWS_AMD
 
   #windows-arm:
   #  uses: ./.github/workflows/build-windows-arm.yaml

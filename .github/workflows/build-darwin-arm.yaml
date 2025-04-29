@@ -33,10 +33,10 @@ jobs:
       run: stack setup #--arch=aarch64
 
     - name: Build dependencies
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies
+      run: stack build #--arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies
 
     - name: Build dependent
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build #--arch=aarch64 --ghc-options="-optc-march=armv8-a"
 
     - name: Run tests
       run: stack test

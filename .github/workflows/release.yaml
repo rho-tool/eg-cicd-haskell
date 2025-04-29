@@ -48,6 +48,9 @@ jobs:
           name: ${{inputs.linux_amd_name}}
           path: ./artefacts
 
+      - name: Debug
+        run: echo ${{github.ref_name}}
+
 #      - name: Download executable MacOS AMD
 #        uses: actions/download-artifact@v4
 #        with:

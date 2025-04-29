@@ -2,6 +2,10 @@ name: Build Windows AMD64
 
 on:
   workflow_call:
+    inputs:
+      os-name:
+        type: string
+        required: true
     outputs:
       artefact_name:
         value: ${{jobs.build.outputs.artefact_name}}
@@ -13,7 +17,7 @@ jobs:
 
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{inputs.os-name}}
     steps:
 
     - name: Install YQ via Chocolatey
@@ -50,7 +54,8 @@ jobs:
       id: determine-artefact
       shell: bash
       run: |
-        PGM=$(yq '.name' package.yaml)
+        PGM=${{env.PROGRAM}}
+        # $(yq '.name' package.yaml)
         VSN=${{github.ref_name}}
         SYS=$(uname -s  | tr [:upper:] [:lower:])
         MAC=$(uname -m)

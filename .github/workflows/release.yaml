@@ -6,7 +6,6 @@ on:
       linux_amd_name:
         type: string
         required: true
-        default: 'linux-amd64'
       #artefact_name_linux_arm:
       #  type: string
       #  required: false
@@ -15,10 +14,9 @@ on:
       #  type: string
       #  required: false
       #  default: 'macos-amd64'
-      #artefact_name_macos_arm:
-      #  type: string
-      #  required: false
-      #  default: 'macos-arm64'
+      darwin_arm_name:
+        type: string
+        required: true
       #artefact_name_windows_amd:
       #  type: string
       #  required: false

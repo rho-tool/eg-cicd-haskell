@@ -1,4 +1,4 @@
-name: Build Darwin ARM64
+name: Build Linux AMD64
 
 on:
   workflow_call:
@@ -33,10 +33,10 @@ jobs:
       run: stack setup
 
     - name: Build dependencies
-      run: stack build --only-dependencies --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build --only-dependencies
 
     - name: Build dependent
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build
 
     - name: Run tests
       run: stack test

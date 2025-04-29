@@ -12,12 +12,20 @@ jobs:
   linux-amd:
     uses: ./.github/workflows/build-linux-amd.yaml
 
+  linux-arm:
+    uses: ./.github/workflows/build-linux-arm.yaml
+
+  darwin-amd:
+    uses: ./.github/workflows/build-darwin-amd.yaml
+
   darwin-arm:
     uses: ./.github/workflows/build-darwin-arm.yaml
 
   release:
-    needs: [linux-amd, darwin-arm]
+    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}
+      linux_arm_name: ${{needs.linux-arm.artefact_name}}
+      darwin_amd_name: ${{needs.darwin-amd.artefact_name}}
       darwin_arm_name: ${{needs.darwin-arm.artefact_name}}

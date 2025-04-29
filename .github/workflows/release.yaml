@@ -6,25 +6,21 @@ on:
       linux_amd_name:
         type: string
         required: true
-      #artefact_name_linux_arm:
-      #  type: string
-      #  required: false
-      #  default: 'linux-arm64'
-      #artefact_name_macos_amd:
-      #  type: string
-      #  required: false
-      #  default: 'macos-amd64'
+      linux_arm_name:
+        type: string
+        required: true
+      darwin_amd_name:
+        type: string
+        required: true
       darwin_arm_name:
         type: string
         required: true
-      #artefact_name_windows_amd:
+      #windows_amd_name:
       #  type: string
-      #  required: false
-      #  default: 'windows-amd64'
-      #artefact_name_windows_arm:
+      #  required: true
+      #windows_arm_name:
       #  type: string
-      #  required: false
-      #  default: 'windows-arm64'
+      #  required: true
 
 permissions:
   contents: write
@@ -46,29 +42,29 @@ jobs:
           name: ${{inputs.linux_amd_name}}
           path: artefacts
 
-#      - name: Download executable MacOS AMD
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: macos-x86_64
-#          path: artefacts
-#
+      - name: Download executable Linux ARM
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.linux_arm_name}}
+          path: artefacts
+
+      - name: Download executable Darwin AMD
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.darwin_amd_name}}
+          path: artefacts
+
+      - name: Download executable Darwin ARM
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.darwin_arm_name}}
+          path: artefacts
+
 #      - name: Download executable Windows AMD
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: windows-x86_64
 #          path: artefacts
-#
-#      - name: Download executable Linux ARM
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: linux-arm64
-#          path: artefacts
-
-      - name: Download executable MacOS ARM
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{inputs.darwin_arm_name}}
-          path: artefacts
 #
 #      - name: Download executable Windows ARM
 #        uses: actions/download-artifact@v4

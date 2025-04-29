@@ -1,4 +1,4 @@
-name: Build Linux AMD64
+name: Build Darwin AMD64
 
 on:
   workflow_call:
@@ -59,7 +59,7 @@ jobs:
         echo $ART
         echo $BIN
         echo $EXE
-        ls $BIN
+        ls -l $BIN
         cp $BIN/$EXE $ART
         echo artefact_name=$ART >> $GITHUB_OUTPUT
 

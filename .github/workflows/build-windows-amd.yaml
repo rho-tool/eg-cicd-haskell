@@ -1,4 +1,4 @@
-name: Build Darwin ARM64
+name: Build Windows AMD64
 
 on:
   workflow_call:
@@ -13,13 +13,14 @@ jobs:
 
   build:
 
-    runs-on: macos-latest
+    runs-on: windows-latest
     steps:
 
     - name: Check out code
       uses: actions/checkout@v4
 
     - name: Unpack YAML
+      shell: bash
       run: mv etc/*.yaml* .
 
     - name: Install Stack
@@ -30,13 +31,13 @@ jobs:
         enable-stack: true
 
     - name: Set up Stack
-      run: stack setup --arch=aarch64
+      run: stack setup
 
     - name: Build dependencies
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies
+      run: stack build --only-dependencies
 
     - name: Build dependent
-      run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a"
+      run: stack build
 
     - name: Run tests
       run: stack test
@@ -52,14 +53,14 @@ jobs:
         ART=$PGM-$VSN-$SYS-$MAC
         BIN=$(stack path --local-install-root)/bin
         EXE=$(yq '.executables.[] | key' package.yaml)
-        # echo $PGM
-        # echo $VSN
-        # echo $SYS
-        # echo $MAC
-        # echo $ART
-        # echo $BIN
-        # echo $EXE
-        # ls -l $BIN
+        echo $PGM
+        echo $VSN
+        echo $SYS
+        echo $MAC
+        echo $ART
+        echo $BIN
+        echo $EXE
+        ls -l $BIN
         cp $BIN/$EXE $ART
         echo artefact_name=$ART >> $GITHUB_OUTPUT
 

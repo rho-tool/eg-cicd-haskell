@@ -1,4 +1,4 @@
-name: Build Darwin ARM64
+name: Build Linux ARM64
 
 on:
   workflow_call:
@@ -31,6 +31,8 @@ jobs:
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
+      with:
+        platforms: arm64
 
     - name: Set up Stack
       run: stack setup --arch=aarch64
@@ -62,7 +64,7 @@ jobs:
         # echo $ART
         # echo $BIN
         # echo $EXE
-        # ls $BIN
+        # ls -l $BIN
         cp $BIN/$EXE $ART
         echo artefact_name=$ART >> $GITHUB_OUTPUT
 

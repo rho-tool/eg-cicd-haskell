@@ -30,7 +30,7 @@ jobs:
         enable-stack: true
 
     - name: Set up Stack
-      run: stack setup --arch=aarch64
+      run: stack setup #--arch=aarch64
 
     - name: Build dependencies
       run: stack build --arch=aarch64 --ghc-options="-optc-march=armv8-a" --only-dependencies

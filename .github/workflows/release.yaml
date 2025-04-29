@@ -48,13 +48,6 @@ jobs:
           name: ${{inputs.linux_amd_name}}
           path: ./artefacts
 
-      - name: Debug
-        run: |
-          echo ${{github.ref_name}}
-          ls -al ./artefacts
-          echo ---
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-x86_64
-
 #      - name: Download executable MacOS AMD
 #        uses: actions/download-artifact@v4
 #        with:
@@ -89,12 +82,20 @@ jobs:
 #        run: |
 #          chmod +x artefacts/*
 
-      - name: List files
-        id: list-files
+      - name: Debug
         run: |
-          echo "file_list=$(find ./artefacts -type f | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
-          echo "Files found:"
-          find ./artefacts -type f
+          echo ${{github.ref_name}}
+          ls -al ./artefacts
+          echo ---
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-x86_64
+          # ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-darwin-arm64
+
+      #- name: List files
+      #  id: list-files
+      #  run: |
+      #    echo "file_list=$(find ./artefacts -type f | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+      #    echo "Files found:"
+      #    find ./artefacts -type f
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

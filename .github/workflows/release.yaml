@@ -49,7 +49,11 @@ jobs:
           path: ./artefacts
 
       - name: Debug
-        run: echo ${{github.ref_name}}
+        run: |
+          echo ${{github.ref_name}}
+          ls -al ./artefacts
+          echo ---
+          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-x86_64
 
 #      - name: Download executable MacOS AMD
 #        uses: actions/download-artifact@v4

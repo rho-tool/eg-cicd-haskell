@@ -25,12 +25,12 @@ jobs:
       program: eg-cicd-haskell
       version: ${{github.ref_name}}
 
-  #linux-arm:
-  #  uses: ./.github/workflows/build.yaml
-  #  with:
-  #    os-name: ubuntu-24.04-arm
-  #    program: eg-cicd-haskell
-  #    version: ${{github.ref_name}}
+  linux-arm:
+    uses: ./.github/workflows/build.yaml
+    with:
+      os-name: ubuntu-24.04-arm
+      program: eg-cicd-haskell
+      version: ${{github.ref_name}}
 
   #darwin-amd:
   #  uses: ./.github/workflows/build.yaml
@@ -63,13 +63,7 @@ jobs:
   #    suffix: .exe
 
   release:
-    needs: [linux-amd]
-    #needs: [linux-arm]
-    #needs: [darwin-amd]
-    #needs: [darwin-arm]
-    #needs: [windows-amd]
-    #needs: [windows-arm]
-    #needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
+    needs: [linux-amd, linux-arm] #, darwin-amd, darwin-arm, windows-amd, windows-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}

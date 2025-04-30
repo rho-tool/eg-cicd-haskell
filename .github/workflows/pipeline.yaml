@@ -7,15 +7,6 @@ on:
 permissions:
   contents: write
 
-env:
-  PROGRAM: eg-cicd-haskell
-  VERSION: ${{github.ref_name}}
-  OS_LINUX_AMD: ubuntu-latest
-  OS_LINUX_ARD: ubuntu-24.04-arm
-  OS_DARWIN_AMD: macos-13
-  OS_DARWIN_ARD: macos-latest
-  OS_WINDOWS_ARD: windows-11-arm
-
 jobs:
 
   linux-amd:
@@ -39,12 +30,12 @@ jobs:
       program: eg-cicd-haskell
       version: ${{github.ref_name}}
 
-  #darwin-arm:
-  #  uses: ./.github/workflows/build.yaml
-  #  with:
-  #    os-name: macos-latest
-  #    program: eg-cicd-haskell
-  #    version: ${{github.ref_name}}
+  darwin-arm:
+    uses: ./.github/workflows/build.yaml
+    with:
+      os-name: macos-latest
+      program: eg-cicd-haskell
+      version: ${{github.ref_name}}
 
   #windows-amd:
   #  uses: ./.github/workflows/build.yaml
@@ -63,7 +54,7 @@ jobs:
   #    suffix: .exe
 
   release:
-    needs: [linux-amd, linux-arm, darwin-amd] #, darwin-arm, windows-amd, windows-arm]
+    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm] #, windows-amd, windows-arm]
     uses: ./.github/workflows/release.yaml
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}

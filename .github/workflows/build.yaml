@@ -35,10 +35,10 @@ jobs:
     - name: Unpack YAML
       run: mv etc/*.yaml* .
 
-    - name: Install GHCup
+    - name: Install ghcup
       run: |
-        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- -y
-        export PATH="$HOME/.ghcup
+        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- --no-interactive
+        echo 'export PATH="$HOME/.ghcup/bin:$PATH"' >> $GITHUB_ENV
 
     - name: Install Stack
       uses: haskell-actions/setup@v2

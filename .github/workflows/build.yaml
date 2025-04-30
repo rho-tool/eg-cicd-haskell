@@ -38,7 +38,9 @@ jobs:
     - name: Install ghcup
       run: |
         curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- --no-interactive
-        echo 'export PATH="$HOME/.ghcup/bin:$PATH"' >> $GITHUB_ENV
+        echo 'PATH=$HOME/.ghcup/bin:$PATH' >> $GITHUB_ENV
+        source $GITHUB_ENV
+        ghcup --version || { echo "ghcup installation failed"; exit 1; }
 
     - name: Install Stack
       uses: haskell-actions/setup@v2

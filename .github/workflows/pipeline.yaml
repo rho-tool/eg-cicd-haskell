@@ -18,25 +18,33 @@ env:
 
 jobs:
 
-  #show-env:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #  - run: |
-  #      echo ${{env.PROGRAM}}
-  #      echo ${{env.VERSION}}
-  #      echo ${{env.OS_DARWIN_AMD}}
-
-  #linux-amd:
-  #  uses: ./.github/workflows/build-linux-amd.yaml
+  linux-amd:
+    uses: ./.github/workflows/build.yaml
+    with:
+      os-name: ubuntu-latest
+      program: eg-cicd-haskell
+      version: ${{github.ref_name}}
 
   #linux-arm:
-  #  uses: ./.github/workflows/build-linux-arm.yaml
+  #  uses: ./.github/workflows/build.yaml
+  #  with:
+  #    os-name: ubuntu-24.04-arm
+  #    program: eg-cicd-haskell
+  #    version: ${{github.ref_name}}
 
   #darwin-amd:
-  #  uses: ./.github/workflows/build-darwin-amd.yaml
+  #  uses: ./.github/workflows/build.yaml
+  #  with:
+  #    os-name: macos-13
+  #    program: eg-cicd-haskell
+  #    version: ${{github.ref_name}}
 
   #darwin-arm:
-  #  uses: ./.github/workflows/build-darwin-arm.yaml
+  #  uses: ./.github/workflows/build.yaml
+  #  with:
+  #    os-name: macos-latest
+  #    program: eg-cicd-haskell
+  #    version: ${{github.ref_name}}
 
   #windows-amd:
   #  uses: ./.github/workflows/build.yaml
@@ -46,21 +54,21 @@ jobs:
   #    version: ${{github.ref_name}}
   #    suffix: .exe
 
-  windows-arm:
-    uses: ./.github/workflows/build.yaml
-    with:
-      os-name: windows-11-arm
-      program: eg-cicd-haskell
-      version: ${{github.ref_name}}
-      suffix: .exe
+  #windows-arm:
+  #  uses: ./.github/workflows/build.yaml
+  #  with:
+  #    os-name: windows-11-arm
+  #    program: eg-cicd-haskell
+  #    version: ${{github.ref_name}}
+  #    suffix: .exe
 
   release:
-    #needs: [linux-amd]
+    needs: [linux-amd]
     #needs: [linux-arm]
     #needs: [darwin-amd]
     #needs: [darwin-arm]
     #needs: [windows-amd]
-    needs: [windows-arm]
+    #needs: [windows-arm]
     #needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
     uses: ./.github/workflows/release.yaml
     with:

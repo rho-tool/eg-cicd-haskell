@@ -74,12 +74,6 @@ jobs:
           echo ${{github.ref_name}}
           ls -al ./artefacts
           echo ---
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-x86_64
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-linux-arm64
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-darwin-x86_64
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-darwin-arm64
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-windows-x86_64
-          ls -al ./artefacts/eg-cicd-haskell-${{github.ref_name}}-windows-arm64
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

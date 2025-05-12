@@ -56,7 +56,7 @@ jobs:
   release:
     uses: ./.github/workflows/release.yaml
     needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
-    if: always()
+    if: always ()
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}
       linux_arm_name: ${{needs.linux-arm.artefact_name}}

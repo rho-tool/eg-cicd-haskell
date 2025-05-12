@@ -18,9 +18,9 @@ on:
       windows_amd_name:
         type: string
         required: true
-      windows_arm_name:
-        type: string
-        required: true
+      #windows_arm_name:
+      #  type: string
+      #  required: true
 
 permissions:
   contents: write

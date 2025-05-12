@@ -45,17 +45,17 @@ jobs:
       version: ${{github.ref_name}}
       suffix: .exe
 
-  windows-arm:
-    uses: ./.github/workflows/build.yaml
-    with:
-      os-name: windows-11-arm
-      program: eg-cicd-haskell
-      version: ${{github.ref_name}}
-      suffix: .exe
+  #windows-arm:
+  #  uses: ./.github/workflows/build.yaml
+  #  with:
+  #    os-name: windows-11-arm
+  #    program: eg-cicd-haskell
+  #    version: ${{github.ref_name}}
+  #    suffix: .exe
 
   release:
     uses: ./.github/workflows/release.yaml
-    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd, windows-arm]
+    needs: [linux-amd, linux-arm, darwin-amd, darwin-arm, windows-amd] #, windows-arm]
     if: always ()
     with:
       linux_amd_name: ${{needs.linux-amd.artefact_name}}
@@ -63,7 +63,7 @@ jobs:
       darwin_amd_name: ${{needs.darwin-amd.artefact_name}}
       darwin_arm_name: ${{needs.darwin-arm.artefact_name}}
       windows_amd_name: ${{needs.windows-amd.artefact_name}}
-      windows_arm_name: ${{needs.windows-arm.artefact_name}}
+      #windows_arm_name: ${{needs.windows-arm.artefact_name}}
 
 #
 # https://docs.github.com/en/actions/writing-workflows/choosing-where-your-workflow-runs/choosing-the-runner-for-a-job#choosing-github-hosted-runners

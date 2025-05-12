@@ -37,20 +37,26 @@ jobs:
 
     - name: Install ghcup
       run: |
-        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- --no-interactive
+        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org\
+        | BOOTSTRAP_HASKELL_YES=1\
+          BOOTSTRAP_HASKELL_NONINTERACTIVE=1\
+          BOOTSTRAP_HASKELL_GHC_VERSION=9.6.7\
+          BOOTSTRAP_HASKELL_CABAL_VERSION=3.12.1.0\
+          BOOTSTRAP_HASKELL_STACK_VERSION=3.3.1\
+          BOOTSTRAP_HASKELL_INSTALL_HLS=2.10.0.0 sh
         echo 'PATH=$HOME/.ghcup/bin:$PATH' >> $GITHUB_ENV
         source $GITHUB_ENV
         ghcup --version || { echo "ghcup installation failed"; exit 1; }
 
-    - name: Install Stack
-      uses: haskell-actions/setup@v2
-      with:
-        ghc-version: '9.4.7'
-        stack-version: 'latest'
-        enable-stack: true
+    #- name: Install Stack
+    #  uses: haskell-actions/setup@v2
+    #  with:
+    #    ghc-version: '9.4.7'
+    #    stack-version: 'latest'
+    #    enable-stack: true
 
-    - name: Set up Stack
-      run: stack setup
+    #- name: Set up Stack
+    #  run: stack setup
 
     - name: Build dependencies
       run: stack build --only-dependencies
